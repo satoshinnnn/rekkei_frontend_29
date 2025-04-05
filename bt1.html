@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quản lý sách</title>
+</head>
+<body>
+    <script>
+        let choice;
+        let contacts = [];
+
+        function displayContacs() {
+        console.table(contacts);
+        }
+
+        do {
+            choice = +prompt(
+`           1. Thêm đối tượng Contact vào danh sách liên hệ.
+            2. Hiển thị danh sách danh bạ.
+            3. Tìm kiếm thông tin Contact theo số điện thoại.
+            4. Cập nhật thông tin Contact(name, email, phone) theo id.
+            5. Xóa một đối tượng Contact  khỏi danh sách danh bạ theo id.
+            6.Thoát.`
+            );
+
+            switch (choice) {
+                case 1:
+                    let id = Math.ceil(Math.random() * 100000000);
+                    let name = prompt("Nhập tên: ");
+                    let email = prompt("Nhập email: ");
+                    let phone = prompt("Nhập số điện thoại: ");
+                    const contact = {
+                        id,
+                        name,
+                        email,
+                        phone,
+                    };
+                    contacts.push(contact);
+                    break;
+                case 2:
+                displayContacs();
+                break;
+
+                case 3:
+                let phoneSearch = prompt("Nhập số điện thoại cần tìm: ");
+                let findContactByPhone = contacts.findIndex((contact) => {
+                    return contact.phone === phoneSearch;
+                });
+                if (findContactByPhone !== -1) {
+                    console.log(`Tìm thấy thông tin liên hệ có số điện thoại ${phoneSearch}`);
+                } else {
+                    console.log(`Không tìm thấy thông tin liên hệ có số điện thoại ${phoneSearch}`);
+                }
+                break;
+
+                case 4:
+                let idContactUpdate = +prompt("Nhập id Contact cần cập nhật: ").trim();
+                let findContactById = contacts.findIndex((contact) => {
+                    return contact.id === idContactUpdate;
+                });
+                if (findContactById !== -1) {
+                    let indexUpdate = findContactById;
+                    let newName = prompt("Nhập tên mới: ");
+                    let newEmail = prompt("Nhập email mới: ");
+                    let newPhone = prompt("Nhập số điện thoại mới: ");
+                    contacts[indexUpdate].name = newName;
+                    contacts[indexUpdate].email = newEmail;
+                    contacts[indexUpdate].phone = newPhone;
+                    console.log(`Cập nhật thành công thông tin liên hệ có id ${idContactUpdate}`);
+                } else {
+                    console.log(`Không tìm thấy thông tin liên hệ có id ${idContactUpdate}`);
+                }
+                break;
+
+                case 5:
+                let idContactDelete = +prompt("Nhập id Contact cần xóa: ").trim();
+                let findContacDeletetById = contacts.findIndex((contact) => {
+                    return contact.id === idContactDelete;
+                })
+                if (findContacDeletetById !== -1) {
+                    let indexDelete = findContacDeletetById;
+                    contacts.splice(indexDelete, 1);
+                    console.log(`Xóa thành công thông tin liên hệ có id ${idContactDelete}`);
+                } else {
+                    console.log(`Không tìm thấy thông tin liên hệ có id ${idContactDelete}`);
+                }
+                break;
+
+                case 6:
+                console.log("👋 Thoát chương trình.");
+                break;
+
+                default:
+                break;
+            }
+        } while (choice !== 6);
+    </script>
+</body>
+</html>

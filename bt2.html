@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Quản lý sản phẩm</title>
+</head>
+<body>
+    <script>
+        let choice;
+        let products = [];
+
+        // Hiển thị tất cả sản phẩm
+        function displayProducts() {
+            console.table(products);
+        }
+
+        // Tìm sản phẩm theo id
+        function findProductById(id) {
+            return products.find((product) => product.id === id);
+        }
+
+        // Tìm sản phẩm theo khoảng giá
+        function findProductsByPriceRange(start, end) {
+           return products.filter((product)=>product.price>=start && product.price<=end);
+        }
+
+        do {
+            choice = +prompt(
+`           1. Thêm sản phẩm vào danh sách sản phẩm.
+            2. Hiển thị tất cả sản phẩm.
+            3. Hiển thị chi tiết sản phẩm theo id.
+            4. Cập nhật thông tin sản phẩm theo id 
+            5. Xóa sản phẩm theo id.
+            6. Tìm sản phẩm theo khoảng giá.
+            7. Thoát.`
+            );
+
+            switch (choice) {
+                case 1:
+                    let id = Math.ceil(Math.random() * 100000000);
+                    let name = prompt("Nhập tên sản phẩm: ");
+                    let price = +prompt("Nhập giá sản phẩm: ");
+                    let category = prompt("Nhập danh mục sản phẩm: ");
+                    let quantity = +prompt("Nhập số lượng sản phẩm trong kho: ");
+                    const product = {
+                        id,
+                        name,
+                        price,
+                        category,
+                        quantity
+                    };
+                    products.push(product);
+                    console.log(`Thêm thành công sản phẩm ${product.name} có id ${product.id}`);
+                    break;
+
+                case 2:
+                    displayProducts();
+                    break;
+
+                case 3:
+                    let productIdSearch = +prompt("Nhập id sản phẩm cần tìm: ");
+                    let foundProduct = findProductById(productIdSearch);
+                    if (foundProduct) {
+                        console.log(`Chi tiết sản phẩm: \nID: ${foundProduct.id}\nTên: ${foundProduct.name}\nGiá: ${foundProduct.price}\nDanh mục: ${foundProduct.category}\nSố lượng: ${foundProduct.quantity}`);
+                    } else {
+                        console.log(`Không tìm thấy sản phẩm có id ${productIdSearch}`);
+                    }
+                    break;
+
+                case 4:
+                    let productIdUpdate = +prompt("Nhập id sản phẩm cần cập nhật: ");
+                    let productToUpdate = findProductById(productIdUpdate);
+                    if (productToUpdate) {
+                        let newName = prompt("Nhập tên mới: ");
+                        let newPrice = +prompt("Nhập giá mới: ");
+                        let newCategory = prompt("Nhập danh mục mới: ");
+                        let newQuantity = +prompt("Nhập số lượng mới: ");
+                        productToUpdate.name = newName;
+                        productToUpdate.price = newPrice;
+                        productToUpdate.category = newCategory;
+                        productToUpdate.quantity = newQuantity;
+                        console.log(`Cập nhật thành công sản phẩm có id ${productIdUpdate}`);
+                    } else {
+                        console.log(`Không tìm thấy sản phẩm có id ${productIdUpdate}`);
+                    }
+                    break;
+
+                case 5:
+                    let productIdDelete = +prompt("Nhập id sản phẩm cần xóa: ");
+                    let productToDelete = findProductById(productIdDelete);
+                    if (productToDelete) {
+                        products = products.filter(product => product.id !== productIdDelete);
+                        console.log(`Xóa thành công sản phẩm có id ${productIdDelete}`);
+                    } else {
+                        console.log(`Không tìm thấy sản phẩm có id ${productIdDelete}`);
+                    }
+                    break;
+                
+                case 6:
+                    let start = prompt("Nhập khoảng giá bắt đầu");
+                    let end = prompt("Nhập khoảng giá kết thúc");
+                    if (isNaN(start) || isNaN(end)) {
+                        console.log("Khoảng giá phải là số hợp lệ!");
+                    } else if (start === "" || end === "") {
+                        console.log("Khoảng giá không thể chứa khoảng trắng.");
+                    } else if (parseFloat(start) < parseFloat(end)) {
+                        let productsInRange = findProductsByPriceRange(parseFloat(start), parseFloat(end));
+                        if (productsInRange.length > 0) {
+                            console.table(productsInRange);
+                        } else {
+                            console.log(`Không tìm thấy sản phẩm nào trong khoảng giá ${start} - ${end}`);
+                        }
+                    } else {
+                        console.log("Khoảng giá không hợp lệ!");
+                    }
+                    break;
+
+                case 7:
+                    console.log("👋 Thoát chương trình.");
+                    break;
+
+                default:
+                    console.log("Lựa chọn không hợp lệ! Vui lòng chọn lại.");
+                    break;
+            }
+        } while (choice !== 7);
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        works = [
+            {workName: "Làm bài tập", status: "done"},
+            {workName: "Học bài", status: "doing"},
+            {workName: "Đi chơi", status: "todo"},
+            {workName: "Đi ngủ", status: "done"}
+        ];
+        function filterWorkByInput(inputToCheck) {
+            if (status === "done") { 
+               return works.filter((work) => work.status===inputToCheck); 
+            } else {
+                return works.filter((work)=> work.status === inputToCheck); 
+            }
+        }
+        function filterWork(statusToCheck) {
+            return works.filter((work) => work.status === statusToCheck); 
+        }
+        
+        function orderWorkByStatus() {
+           let doing = filterWork("doing");
+           let todo = filterWork("todo");
+           let done = filterWork("done");
+           return doing.concat(todo, done);
+        }
+
+        function main() {
+            let statusInput = prompt("")
+            console.table(filterWorkByInput(statusInput));
+            console.table(orderWorkByStatus());
+        }
+        main();
+    </script>
+</body>
+</html>

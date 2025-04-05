@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let foods = [{foodName: "Bánh mì", price: 20000},
+                    {foodName: "Phở", price: 30000},
+                    {foodName: "Bún chả", price: 25000},
+                    {foodName: "Cơm tấm", price: 35000}];
+                    
+        function findFoodName(foodToFind) {
+            return foods.find((food) => food.foodName.toLowerCase() === foodToFind.toLowerCase());
+        }
+
+        let food = "bánh mì"; // thử với chữ thường
+        if (findFoodName(food)) {
+            console.log("Tìm thấy món ăn trong danh sách");
+        } else {
+            console.log("Không tìm thấy món ăn trong danh sách");
+        }
+    </script>
+</body>
+</html>
